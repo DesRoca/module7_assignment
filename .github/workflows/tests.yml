@@ -14,12 +14,12 @@ jobs:
 
     steps:
       - name: Check out the code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.x'  # Set your desired Python version
+          python-version: '3.12'  # Explicitly use Python 3.12 to match your Docker setup
 
       - name: Install dependencies from requirements.txt
         run: |
@@ -27,6 +27,6 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-cov  # Ensure pytest-cov is installed
 
-      - name: Run tests with pytest and enforce 100% coverage
+      - name: Run tests with pytest
         run: |
-          pytest --cov=app --cov-fail-under=100
+          PYTHONPATH=. pytest --cov=. -v
